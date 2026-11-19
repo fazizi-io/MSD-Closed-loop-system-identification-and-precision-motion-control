@@ -28,4 +28,3 @@ for fname in files:
         else:
             print(f"  {k} ({type(v).__name__}) -> {v}")
 
-A+B=C
