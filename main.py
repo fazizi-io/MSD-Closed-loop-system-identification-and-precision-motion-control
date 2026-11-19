@@ -27,3 +27,5 @@ for fname in files:
             print(f"  {k} (array) -> shape: {v.shape}, dtype: {v.dtype}")
         else:
             print(f"  {k} ({type(v).__name__}) -> {v}")
+
+A+B=C
