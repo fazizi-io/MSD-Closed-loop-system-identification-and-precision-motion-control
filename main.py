@@ -37,7 +37,7 @@ for k, v in signals.items():
 ## 3. Setup Time Vector & Sampling Rate
 # Since dt in the CSV is 0 (continuous plant), define the data acquisition sampling rate.
 # Note: Check your assignment sheet for exact Fs (commonly 1000 Hz or 2000 Hz -> ~507s or ~253s of data).
-Fs = 1000.0  # [Hz] Adjust if your setup runs at a different rate
+Fs = 1/(30e-6)  # [Hz] Adjust if your setup runs at a different rate
 Ts = 1.0 / Fs
 
 r = signals["r"]  # Reference / Excitation
@@ -129,3 +129,13 @@ axes_f[2].grid(True, which="both", alpha=0.3)
 
 plt.tight_layout()
 plt.show()
+
+# Normalize so the highest denominator power (s^8) has coefficient 1.0
+scale = den[0]
+num_norm = num / scale
+den_norm = den / scale
+
+P_nodelay = ct.tf(num_norm, den_norm, dt)
+print(P_nodelay)
+print("Poles [Hz]:", np.abs(ct.poles(P_nodelay)) / (2 * np.pi))
+print("DC Gain:", np.real(ct.dcgain(P_nodelay)))
